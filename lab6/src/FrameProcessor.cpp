@@ -1,8 +1,15 @@
 #include "FrameProcessor.hpp"
 
-cv::Mat FrameProcessor::process(const cv::Mat& frame, KeyProcessor::Mode mode, >
-
+cv::Mat FrameProcessor::process(const cv::Mat& frame,
+                                KeyProcessor::Mode mode,
+                                int blurValue,
+                                int brightnessValue)
+{
     cv::Mat result = frame.clone();
+
+    if (brightnessValue != 0) {
+        result.convertTo(result, -1, 1.0, brightnessValue);
+    }
 
     switch (mode) {
 
@@ -11,9 +18,15 @@ cv::Mat FrameProcessor::process(const cv::Mat& frame, KeyProcessor::Mode mode, >
             cv::cvtColor(result, result, cv::COLOR_GRAY2BGR);
             break;
 
-        case KeyProcessor::BLUR:
-            cv::GaussianBlur(result, result, cv::Size(blurValue, blurValue), 0);
+        case KeyProcessor::BLUR: {
+            int k = blurValue;
+
+            if (k < 1) k = 1;
+            if (k % 2 == 0) k++;
+
+            cv::GaussianBlur(result, result, cv::Size(k, k), 0);
             break;
+        }
 
         case KeyProcessor::CANNY: {
             cv::Mat gray;
