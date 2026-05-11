@@ -8,4 +8,5 @@ private:
 public:
     CameraProvider();
     cv::Mat getFrame();
+    bool isOpened() const;
 };
