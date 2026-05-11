@@ -4,6 +4,8 @@
 
 class FrameProcessor {
 public:
-    cv::Mat process(const cv::Mat& frame, KeyProcessor::Mode mode, int blurValu>
+    cv::Mat process(const cv::Mat& frame,
+                    KeyProcessor::Mode mode,
+                    int blurValue,
+                    int brightnessValue);
 };
-
