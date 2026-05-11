@@ -54,12 +54,16 @@
 
 ### Linux:
 bash
+
 ./preinstall.sh
 
 ## Збірка проєкту
 mkdir build
+
 cd build
+
 cmake ..
+
 make
 
 ## Запуск
