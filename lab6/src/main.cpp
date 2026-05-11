@@ -12,10 +12,12 @@ int main() {
     KeyProcessor::Mode mode = KeyProcessor::ORIGINAL;
 
     int blurValue = 5;
+    int brightnessValue = 0;
 
     cv::namedWindow("Window");
 
     cv::createTrackbar("Blur", "Window", &blurValue, 31);
+    cv::createTrackbar("Brightness", "Window", &brightnessValue, 100);
 
     while (true) {
 
@@ -25,11 +27,11 @@ int main() {
         int key = cv::waitKey(10);
         if (key == 27) break;
 
-        mode = keyProcessor.process(key);
+        if (key != -1) {
+            mode = keyProcessor.process(key);
+        }
 
-        if (blurValue % 2 == 0) blurValue++;
-
-        cv::Mat output = processor.process(frame, mode, blurValue);
+        cv::Mat output = processor.process(frame, mode, blurValue, brightnessValue);
 
         cv::imshow("Window", output);
     }
